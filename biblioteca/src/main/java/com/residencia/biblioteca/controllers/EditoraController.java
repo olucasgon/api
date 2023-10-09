@@ -47,6 +47,7 @@ public class EditoraController {
 
 	@DeleteMapping
 	public ResponseEntity<String> deletarEditora(@RequestBody Editora editora) {
+		editoraService.deletarEditora(editora);
 		return new ResponseEntity<>("Deletado com Sucesso!", HttpStatus.OK);
 	}
 }

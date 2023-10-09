@@ -56,6 +56,7 @@ public class AlunoController {
 
 	@DeleteMapping
 	public ResponseEntity<String> deletarAluno(@RequestBody Aluno aluno) {
+		alunoService.deletarAluno(aluno);
 		return new ResponseEntity<>("Deletado com Sucesso!", HttpStatus.OK);
 	}
 
