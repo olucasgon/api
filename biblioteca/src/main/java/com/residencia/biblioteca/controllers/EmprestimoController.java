@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.residencia.biblioteca.entities.Emprestimo;
 import com.residencia.biblioteca.services.EmprestimoService;
 
@@ -32,7 +31,13 @@ public class EmprestimoController {
 	// O corringa e {id}
 	@GetMapping("/{id}")
 	public ResponseEntity<Emprestimo> buscarPorId(@PathVariable Integer id) {
-		return new ResponseEntity<>(emprestimoService.buscarEmprestimoPorId(id), HttpStatus.OK);
+		Emprestimo emprestimo = emprestimoService.buscarEmprestimoPorId(id);	
+		
+		if(emprestimo == null)
+			return new ResponseEntity<>(emprestimo, HttpStatus.NOT_FOUND);
+		
+			else
+			return new ResponseEntity<>(emprestimo, HttpStatus.OK);
 	}
 
 	@PostMapping

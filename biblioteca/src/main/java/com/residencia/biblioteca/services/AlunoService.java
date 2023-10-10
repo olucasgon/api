@@ -20,7 +20,16 @@ public class AlunoService {
 	}
 	
 	public Aluno buscarAlunoPorId(Integer id) {
-		return alunoRepo.findById(id).get();
+		//ESTES SÂO ALGUMAS OPÇÔES
+//		return alunoRepo.findById(id).get();
+		
+//		Optional<Aluno> alunoBanco = alunoRepo.findById(id);
+//		if(alunoBanco.isPresent())
+//			return alunoBanco.get();
+//		else
+//			return null;
+		
+		return alunoRepo.findById(id).orElse(null);
 	}
 	
 	public Aluno salvarAluno(Aluno aluno) {

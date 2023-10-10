@@ -32,7 +32,13 @@ public class EditoraController {
 	// O corringa e {id}
 	@GetMapping("/{id}")
 	public ResponseEntity<Editora> buscarPorId(@PathVariable Integer id) {
-		return new ResponseEntity<>(editoraService.buscarEditorPorId(id), HttpStatus.OK);
+		Editora editora = editoraService.buscarEditorPorId(id);
+		
+		if(editora == null)
+			return new ResponseEntity<>(editora, HttpStatus.NOT_FOUND);
+		
+			else
+			return new ResponseEntity<>(editora, HttpStatus.OK);
 	}
 
 	@PostMapping

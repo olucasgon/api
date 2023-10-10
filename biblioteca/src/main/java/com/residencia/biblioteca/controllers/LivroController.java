@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.residencia.biblioteca.entities.Livro;
 import com.residencia.biblioteca.services.LivroService;
 
@@ -32,7 +31,13 @@ public class LivroController {
 	// O corringa e {id}
 	@GetMapping("/{id}")
 	public ResponseEntity<Livro> buscarPorId(@PathVariable Integer id) {
-		return new ResponseEntity<>(livroService.buscarLivroPorId(id), HttpStatus.OK);
+		Livro livro = livroService.buscarLivroPorId(id);	
+		
+		if(livro == null)
+			return new ResponseEntity<>(livro, HttpStatus.NOT_FOUND);
+		
+			else
+			return new ResponseEntity<>(livro, HttpStatus.OK);
 	}
 
 	@PostMapping
