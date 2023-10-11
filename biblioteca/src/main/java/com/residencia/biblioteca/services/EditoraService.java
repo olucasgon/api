@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.residencia.biblioteca.entities.Editora;
 import com.residencia.biblioteca.repositories.EditoraRepository;
 
@@ -32,7 +31,23 @@ public class EditoraService {
 		return editoraRepo.save(editora);
 	}
 	
-	public void deletarEditora(Editora editora) {
-	  editoraRepo.delete(editora);
+	public Boolean deletarEditora(Editora editora) {
+		if (editora == null) {
+			return false;
+		}
+		Editora editoraExistente = buscarEditorPorId(editora.getCodigoEditora());
+
+		if (editoraExistente == null) {
+			return false;
+		}
+		editoraRepo.delete(editora);
+
+		Editora editoraContinuaExistindo = buscarEditorPorId(editora.getCodigoEditora());
+
+		if (editoraContinuaExistindo == null) {
+			return true;
+		}
+		return false;
+
 	}
 }

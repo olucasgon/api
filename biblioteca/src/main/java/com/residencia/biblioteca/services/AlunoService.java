@@ -14,33 +14,49 @@ public class AlunoService {
 
 	@Autowired
 	AlunoRepository alunoRepo;
-	
-	public List<Aluno> listarAlunos(){
+
+	public List<Aluno> listarAlunos() {
 		return alunoRepo.findAll();
 	}
-	
+
 	public Aluno buscarAlunoPorId(Integer id) {
-		//ESTES SÂO ALGUMAS OPÇÔES
+		// ESTES SÂO ALGUMAS OPÇÔES
 //		return alunoRepo.findById(id).get();
-		
+
 //		Optional<Aluno> alunoBanco = alunoRepo.findById(id);
 //		if(alunoBanco.isPresent())
 //			return alunoBanco.get();
 //		else
 //			return null;
-		
+
 		return alunoRepo.findById(id).orElse(null);
 	}
-	
+
 	public Aluno salvarAluno(Aluno aluno) {
 		return alunoRepo.save(aluno);
 	}
-	
+
 	public Aluno atualizarAluno(Aluno aluno) {
 		return alunoRepo.save(aluno);
 	}
-	
-	public void deletarAluno(Aluno aluno) {
-	  alunoRepo.delete(aluno);
+
+	public Boolean deletarAluno(Aluno aluno) {
+		if(aluno == null) {
+			return false;
+		}
+		Aluno alunoExistente = buscarAlunoPorId(aluno.getNumeroMatriculaAluno());
+
+		if(alunoExistente == null) {
+			return false;
+		}
+		alunoRepo.delete(aluno);
+
+		Aluno alunoContinuaExistindo = buscarAlunoPorId(aluno.getNumeroMatriculaAluno());
+
+		if(alunoContinuaExistindo == null) {
+			return true;
+		}
+		return false;
+
 	}
 }

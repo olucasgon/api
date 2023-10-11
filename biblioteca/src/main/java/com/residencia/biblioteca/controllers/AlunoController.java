@@ -35,18 +35,18 @@ public class AlunoController {
 	// O corringa e {id}
 	@GetMapping("/{id}")
 	public ResponseEntity<Aluno> buscarPorId(@PathVariable Integer id) {
-	Aluno aluno = alunoService.buscarAlunoPorId(id);
-		
-	if(aluno == null)
-		return new ResponseEntity<>(aluno, HttpStatus.NOT_FOUND);
-	
-		else
-		return new ResponseEntity<>(aluno, HttpStatus.OK);
+		Aluno aluno = alunoService.buscarAlunoPorId(id);
+
+		if (aluno == null) {
+			return new ResponseEntity<>(aluno, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(aluno, HttpStatus.OK);
+		}
 	}
-	
+
 	// /aluno/por?id=5
 	@GetMapping("/porid")
-	public ResponseEntity<Aluno> buscarPorAelunoId(@RequestParam Integer id) {
+	public ResponseEntity<Aluno> buscarPorAlunoId(@RequestParam Integer id) {
 		return new ResponseEntity<>(alunoService.buscarAlunoPorId(id), HttpStatus.OK);
 	}
 
@@ -62,8 +62,11 @@ public class AlunoController {
 
 	@DeleteMapping
 	public ResponseEntity<String> deletarAluno(@RequestBody Aluno aluno) {
-		alunoService.deletarAluno(aluno);
-		return new ResponseEntity<>("Deletado com Sucesso!", HttpStatus.OK);
+		if (alunoService.deletarAluno(aluno)) {
+			return new ResponseEntity<>("Deletado com Sucesso!", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Não foi possível deletar!", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

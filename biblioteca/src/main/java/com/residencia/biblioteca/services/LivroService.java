@@ -29,7 +29,23 @@ public class LivroService {
 		return livroRepo.save(livro);
 	}
 
-	public void deletarLivro(Livro livro) {
+	public Boolean deletarLivro(Livro livro) {
+		if (livro == null) {
+			return false;
+		}
+		Livro livroExistente = buscarLivroPorId(livro.getCodigoLivro());
+
+		if (livroExistente == null) {
+			return false;
+		}
 		livroRepo.delete(livro);
+
+		Livro livroContinuaExistindo = buscarLivroPorId(livro.getCodigoLivro());
+
+		if (livroContinuaExistindo == null) {
+			return true;
+		}
+		return false;
+
 	}
 }

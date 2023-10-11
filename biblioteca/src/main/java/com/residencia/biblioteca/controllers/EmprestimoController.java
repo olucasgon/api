@@ -52,7 +52,10 @@ public class EmprestimoController {
 
 	@DeleteMapping
 	public ResponseEntity<String> deletarEmprestimo(@RequestBody Emprestimo emprestimo) {
-		emprestimoService.deletarEmprestimo(emprestimo);
-		return new ResponseEntity<>("Deletado com Sucesso!", HttpStatus.OK);
+		if (emprestimoService.deletarEmprestimo(emprestimo)) {
+			return new ResponseEntity<>("Deletado com Sucesso!", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Não foi possível deletar!", HttpStatus.BAD_REQUEST);
+		}
 	}
 }

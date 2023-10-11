@@ -52,7 +52,10 @@ public class LivroController {
 
 	@DeleteMapping
 	public ResponseEntity<String> deletarLivro(@RequestBody Livro livro) {
-		livroService.deletarLivro(livro);
-		return new ResponseEntity<>("Deletado com Sucesso!", HttpStatus.OK);
+		if (livroService.deletarLivro(livro)) {
+			return new ResponseEntity<>("Deletado com Sucesso!", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Não foi possível deletar!", HttpStatus.BAD_REQUEST);
+		}
 	}
 }

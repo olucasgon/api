@@ -18,11 +18,20 @@ import jakarta.persistence.Table;
 
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "codigoLivro")
+		property = "codigoLivro",
+		scope = Livro.class)
 @Entity
 //E opcional o @table
 @Table(name = "livro")
 public class Livro {
+
+	public Autor getAutor() {
+		return autor;
+	}
+
+	public void setAutor(Autor autor) {
+		this.autor = autor;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,20 +40,21 @@ public class Livro {
 
 	@Column(name = "nomelivro")
 	private String nomeLivro;
-
-	@Column(name = "nomeautor")
-	private String nomeAutor;
-
+	
+	@ManyToOne
+    @JoinColumn(name = "codigoautor", referencedColumnName = "codigoautor")
+    private Autor autor;
+	
 	@Column(name = "datalancamento")
 	private Date dataLancamento;
 
 	@Column(name = "codigoisbn")
 	private Integer codigoIsbn;
 
-	//@JsonBackReference(value = "editora-livro-ref")
 	@ManyToOne
 	@JoinColumn(name = "codigoeditora", referencedColumnName = "codigoeditora")
 	private Editora editora;
+
 	
 	//@JsonManagedReference(value = "livro-emprestimo-ref")
 	@OneToMany(mappedBy="livro")
@@ -65,14 +75,6 @@ public class Livro {
 
 	public void setNomeLivro(String nomeLivro) {
 		this.nomeLivro = nomeLivro;
-	}
-
-	public String getNomeAutor() {
-		return nomeAutor;
-	}
-
-	public void setNomeAutor(String nomeAutor) {
-		this.nomeAutor = nomeAutor;
 	}
 
 	public Date getDataLancamento() {

@@ -15,11 +15,20 @@ import jakarta.persistence.Table;
 
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "codigoEditora")
+		property = "codigoEditora",
+		scope = Editora.class)
 @Entity
 //E opcional o @table
 @Table(name = "editora")
 public class Editora {
+
+	public List<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(List<Livro> livros) {
+		this.livros = livros;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
