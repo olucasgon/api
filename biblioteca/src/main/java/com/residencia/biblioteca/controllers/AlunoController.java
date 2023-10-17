@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.residencia.biblioteca.dto.AlunoResumidoDTO;
 import com.residencia.biblioteca.entities.Aluno;
 import com.residencia.biblioteca.services.AlunoService;
 
@@ -32,6 +33,12 @@ public class AlunoController {
 		return new ResponseEntity<>(alunoService.listarAlunos(), HttpStatus.OK);
 	}
 
+	@GetMapping("/resumido")
+	public ResponseEntity<List<AlunoResumidoDTO>> getAlunosResumidos() {
+		List<AlunoResumidoDTO> alunosDTO = alunoService.getAlunosResumidos();
+		return new ResponseEntity<>(alunosDTO, HttpStatus.OK);
+	}
+
 	// O corringa e {id}
 	@GetMapping("/{id}")
 	public ResponseEntity<Aluno> buscarPorId(@PathVariable Integer id) {
@@ -41,6 +48,17 @@ public class AlunoController {
 			return new ResponseEntity<>(aluno, HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<>(aluno, HttpStatus.OK);
+		}
+	}
+
+	@GetMapping("/resumido/{id}")
+	public ResponseEntity<AlunoResumidoDTO> getAlunoResumidoPorId(@PathVariable Integer id) {
+		AlunoResumidoDTO alunoResDTO = alunoService.getAlunoResumidoPorId(id);
+
+		if (alunoResDTO == null) {
+			return new ResponseEntity<>(alunoResDTO, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(alunoResDTO, HttpStatus.OK);
 		}
 	}
 
